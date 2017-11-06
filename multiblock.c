@@ -155,6 +155,7 @@ int check(u_char *data, int len){
 				free(sql);
 				//flag = 1;
 				sqlite3_close(db);
+				printf("FLAG = %d\n",flag);
 				return flag;
 		}
 		else{
@@ -194,6 +195,7 @@ return_val print_pkt(struct nfq_data *tb){
 	if(ret >= 0){
 		//printf("payload length = %d\n", ret);
 		ret_val.flag = check(data,ret);
+		printf("return FLAG = %d\n", ret_val.flag);
 	}
 
 	return ret_val;

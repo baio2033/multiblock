@@ -12,7 +12,7 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
 
 
 int main(int argc, char* argv[]) {
-   FILE *fp = fopen("test.csv","r");
+   FILE *fp = fopen("top.csv","r");
    char buf[256] = {0x00, };
    sqlite3 *db;
    char *zErrMsg = 0;
