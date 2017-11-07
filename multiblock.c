@@ -55,7 +55,7 @@ void dump(u_char *data, int len){
 
 static int callback(void *data, int argc, char **argv, char **azColName){
    int i;
-   fprintf(stderr, "%s: ", (const char*)data);
+   fprintf(stderr, "%s ", (const char*)data);
    
    for(i = 0; i<argc; i++){
       printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
@@ -82,7 +82,7 @@ int check(u_char *data, int len){
 	char *sql, *str, *add;
 	char *insert;
 	char *tmp;
-	const char* d = "[+] Callback function called";
+	const char* d = "[+] url to block detected!\n";
 	char *zErrMsg = 0;
 
 	ip_hdr = (struct ip*)data;
@@ -122,7 +122,7 @@ int check(u_char *data, int len){
 				target = (char*)malloc(sizeof(char)*(strlen(data)-idx));
 				memset(target, 0x00, sizeof(char)*(strlen(data)-idx));				
 				strncpy(target, strstr(data, "Host: ")+strlen("Host: "), idx-strlen("Host: "));				
-				printf("[+] target : %s\n",target);
+				//printf("[+] target : %s\n",target);
 
 				//printf("length : %d\n",strlen(target));
 
@@ -131,9 +131,7 @@ int check(u_char *data, int len){
 					fprintf(stderr, "[-] Can't open database : %s\n", sqlite3_errmsg(db));
 					return(0);		
 				}
-				else
-					fprintf(stderr, "[-] Opened database successfully\n");
-
+				
 				sql = (char *)malloc(sizeof(char)*256);
 				memset(sql, 0x00, sizeof(char)*256);
 				//strcpy(sql, "select * from block_url;");
@@ -155,7 +153,7 @@ int check(u_char *data, int len){
 				free(sql);
 				//flag = 1;
 				sqlite3_close(db);
-				printf("FLAG = %d\n",flag);
+				//printf("FLAG = %d\n",flag);
 				return flag;
 		}
 		else{
@@ -195,7 +193,7 @@ return_val print_pkt(struct nfq_data *tb){
 	if(ret >= 0){
 		//printf("payload length = %d\n", ret);
 		ret_val.flag = check(data,ret);
-		printf("return FLAG = %d\n", ret_val.flag);
+		//printf("return FLAG = %d\n", ret_val.flag);
 	}
 
 	return ret_val;
